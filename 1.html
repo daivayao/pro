@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+<body>
+    <script src="">
+        // banner轮播开始
+ $(function() {
+    //2016-07-18 16:33版本
+    //JQ初始化CSS
+    $('.entrance ul li:last').css('margin-right', '0');
+    // var lastEntr=document.getElementById('platList').getElementsByTagName('li').length;
+    // lastEntr[0].style.marginRight=0
+
+    var aImgLi=$('.imgList li');
+    aImgLi.first().show();
+
+    var aBtnLi=$('.btnList li');
+    aBtnLi.last().css('margin-right', 0);
+
+    var timer;
+
+    var banner=$('.banner');
+    banner.hover(function() {
+        clearInterval(timer);
+    },
+    function() {
+        clearInterval(timer);
+        timer=setInterval(nextFn, 2000);
+    });
+
+
+
+    var rightBtn=$('.rightBtn');
+    //定义一个模拟变量
+    var num=0;
+    var nlen=$(".imgList>li").length;
+    //封装下一张的功能
+    function nextFn(event) {
+
+        //辞旧：让当前这一张fadeOut
+        //num在加加之前，就可以代表当前这一张的序号
+        aImgLi.eq(num).stop().fadeOut(800);
+        //让当前这个角标移除current
+        aBtnLi.eq(num).removeClass('current');
+
+        num++;
+        if(num>=nlen){
+            num=0;
+        }
+
+        //迎新：让下一张fadeIn
+        //num在加加之后，可以代表下一张的序号
+        aImgLi.eq(num).stop().fadeIn(800);
+        //让下一个角标新增current
+        aBtnLi.eq(num).addClass('current');
+
+    }
+
+    //下一张切换
+    rightBtn.click(nextFn);
+
+    //自动切换
+    timer=setInterval(nextFn, 2000);
+
+    //上一张切换
+    var leftBtn=$('.leftBtn');
+    leftBtn.click(function(event) {
+
+        //辞旧：让当前这一张fadeOut
+        //num在减减之前，就可以代表当前这一张的序号
+        aImgLi.eq(num).stop().fadeOut(800);
+        //让当前这个角标移除current
+        aBtnLi.eq(num).removeClass('current');
+        num--;
+        if(num<0){
+            num=nlen-1;
+        }
+
+        //迎新：让上一张fadeIn
+        //num在减减之后，可以代表上一张的序号
+        aImgLi.eq(num).stop().fadeIn(800);
+        //让上一个角标新增current
+        aBtnLi.eq(num).addClass('current');
+
+    });
+
+    //点击切换
+    aBtnLi.click(function(event) {
+
+        //现在内存里面驻留的num就代表当前这一张
+        //辞旧：让当前这一张fadeOut
+        aImgLi.eq(num).stop().fadeOut(800);
+        //让当前这个角标移除current
+        aBtnLi.eq(num).removeClass('current');
+
+        //迎新：让与当前角标相匹配的那一张显示
+        //这里需要一个很关键的操作，这是要让内存里面的num和你操作的这个角标的序号做同步；
+        //因为你不做同步的话，内存里面的num永远都是0
+        num=$(this).index();
+        aImgLi.eq(num).stop().fadeIn(800);
+        //让操作的这个角标新增current
+        aBtnLi.eq(num).addClass('current');
+
+
+    });
+ // 右边栏效果
+  // TODO修改
+    var liuRan=$('.liuRan')
+    var telBox=$('.intel')
+
+    var tel=$('.tel')
+    var weiBox=$('.weiXian')
+    var sweepW=$('.weixinSweep')
+     var sweepP=$('.sweepApp')
+    var phone=$('.phone')
+    var timer;
+    tel.hover(function() {
+        telBox.show();
+    }, function() {
+        telBox.hide();
+    });
+     // TODO修改
+    weiBox.hover(function() {
+        sweepW.stop(true).show(300);
+    }, function() {
+        sweepW.stop(true).hide(300);
+    });
+    phone.hover(function() {
+        sweepP.stop(true).show(300);
+    }, function() {
+        sweepP.stop(true).hide(300);
+    });
+/*    liuRan.click(function(event) {
+        $('.box2').stop(true).show(300);
+
+    });*/
+    $('.box2 p i').click(function(event) {
+       $('.box2').stop().hide(300)
+        $('.liuRan').removeClass('impBg');
+    });
+     // TODO修改
+    $('.liuRan').click(function(event) {
+        if ($('.box2').is(":hidden")) {
+            $('.box2').stop(true).show(300);
+        }else{
+            $('.box2').stop().hide(300);
+        }
+
+    });
+
+
+     //TODO修改
+
+// 二维码显示
+    $('.wx').hover(function() {
+         $('.navCode').stop().show(300);
+         }, function() {
+             $('.navCode').stop().hide(300);
+    });
+     $('.yd').hover(function() {
+         $('.navDown').stop().show(300);
+         }, function() {
+             $('.navDown').stop().hide(300);
+    });
+//右侧回到顶部js
+
+// TODO新增
+
+    //一屏的高
+    var viewHeight=$(window).height();
+    var goBackObj=$('.rightGO');
+
+    goBackObj.click(function(event) {
+
+        // $(window).scrollTop(0);
+        //
+        $('html,body').stop().animate({
+            'scrollTop':0
+        }, 500);
+
+    });
+    //个人操作鼠标停留滑入滑出效果
+    var personal=$('.personal');
+    var perBlock=$('.perBlock');
+     personal.hover(function() {
+         perBlock.stop(true).show(300);
+    }, function() {
+        perBlock.stop(true).hide(300);
+    });
+    perBlock.hover(function() {
+        perBlock.stop(true).show(300);
+    }, function() {
+        perBlock.stop(true).hide(300);
+    });
+
+  /*  $('.personal').click({
+        $('.js-newLogin-box').removeClass('hide');
+    });*/
+});
+    </script>
+</body>
+</html>

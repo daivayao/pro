@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <script src="./jquery/jquery.js"></script>
+    <style>
+    .bannerdiv{
+        position:absolute;
+    }
+        ul{
+            list-style:none;
+
+        }
+        ul li {
+            position:absolute;
+            display:none;
+        }
+        ul li:nth-child(2){
+            /* margin-top:20px; */
+        }
+
+        ol{
+            list-style:none;
+            /* position:absolute;
+            top:300px; */
+            margin-top:400px;
+
+        }
+        ol li {
+            float:left;
+            /* padding:10px; */
+            /* background:pink; */
+            width: 20px;
+            height: 20px;
+            border-radius:10px;
+            text-align:center;
+           margin-left:20px;
+        }
+        .active{
+            background:pink;
+        }
+    </style>
+
+</head>
+<body>
+   <div class="bannerdiv"> <ul class="banner">
+        <li><a href="#"><img src="imges/1.jpg" alt=""></a></li>
+        <li><a href="#"><img src="imges/2.jpg" alt=""></a></li>
+        <li><a href="#"><img src="imges/3.jpg" alt=""></a></li>
+        <li><a href="#"><img src="imges/4.jpg" alt=""></a></li>
+
+
+    </ul>
+
+        <ol>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+
+    </ol>
+    <button  class="btns" type="button">上一页</button>
+    <button class="btnx" type="button">下一页</button>
+    </div>
+    <script type="text/javascript">
+         $(function(){
+            // console.log(1);
+            // alert(1);
+
+            // fn();
+
+               var lis= $(".banner li");
+               lis.first().show();
+                var num=0;
+                var olw=$("ol> li").length;
+                var olww=$("ol> li");
+
+                var item;
+                var iiem;
+
+                // function fun(){
+                //     // clearInterval(item);
+                //     item=setInterval(nextFn,2000);
+                // }
+
+                  $(".banner").hover(function(){
+
+                    clearInterval(item);
+
+                },function(){
+                   clearInterval(item);
+                    item=setInterval(nextFn,2000)
+                })
+
+
+
+               function nextFn(event){
+                lis.eq(num).stop().fadeOut(800);
+                olww.eq(num).removeClass("active");
+                    num++;
+                if(num>=olw){
+                    num=0;
+                }
+                lis.eq(num).stop().fadeIn(800);
+                olww.eq(num).addClass("active");
+               };
+
+               item=setInterval(nextFn,2000);
+
+
+               olww.on("click",function (){
+
+                lis.eq(num).stop().fadeOut(800);
+                olww.eq(num).removeClass("active");
+                num=$(this).index();
+                lis.eq(num).stop().fadeIn(800);
+                olww.eq(num).addClass("active");
+
+                clearInterval(iiem);
+                clearInterval(item);
+                iiem=setTimeout(function(){
+
+                    item=setInterval(nextFn,2000);
+
+                },4000)
+
+
+
+
+               });
+
+               function fn(){
+                lis.eq(num).stop().fadeOut(800);
+                olww.eq(num).removeClass('active');
+                num--;
+                if(num<0){
+                    num=olw-1;
+                }
+                lis.eq(num).stop().fadeIn(800);
+                olww.eq(num).addClass('active');}
+
+
+
+               $(".btns").on("click",function(){
+                   clearInterval(item) ;
+                   fn();
+                   clearInterval(iiem);
+                    iiem=setTimeout(function(){
+                         item=setInterval(nextFn,2000)
+                    } ,4000)
+
+               }
+               )
+               $(".btnx").click(function(){
+                 clearInterval(item);
+                        nextFn();
+                    clearInterval(iiem);
+                    iiem =setTimeout(function(){
+                        // clearInterval(item);
+                        item=setInterval(nextFn,2000)
+                        console.log(12);
+                    },4000)
+
+               }
+               );
+
+         })
+
+
+    </script>
+</body>
+</html>
